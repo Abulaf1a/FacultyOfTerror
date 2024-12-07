@@ -1,19 +1,25 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrorGame", "TerrorGame.csproj", "{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}"
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerrorGame", "TerrorGame.csproj", "{A6D9AE0C-DE7F-468F-BB5E-9A7A4E39CB8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	Debug|Any CPU = Debug|Any CPU
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{A6D9AE0C-DE7F-468F-BB5E-9A7A4E39CB8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D9AE0C-DE7F-468F-BB5E-9A7A4E39CB8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D9AE0C-DE7F-468F-BB5E-9A7A4E39CB8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D9AE0C-DE7F-468F-BB5E-9A7A4E39CB8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59B257FA-047B-4176-9118-8722D59F4175}
 	EndGlobalSection
 EndGlobal

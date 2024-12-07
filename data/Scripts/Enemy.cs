@@ -36,6 +36,9 @@ public partial class Enemy : BaseActor
 			Vector3 direction = (nav.GetNextPathPosition() - GlobalPosition).Normalized();
 			LookAt(playerPos);
 			//split out: no y velocity. 
+
+
+
 			velocity.X = Mathf.Lerp(velocity.X, direction.X * Speed, 0.5f);
 			velocity.Z = Mathf.Lerp(velocity.Z, direction.Z * Speed, 0.5f);
 			RotateY(Mathf.DegToRad(180f));//Enemy is rotated due to incorrect rotation in editor. 

@@ -15,8 +15,17 @@ public abstract partial class BaseActor : CharacterBody3D
     public Node3D? mesh;
     public Godot.Vector3 targetPos;
     public float distToTarget;
-
     public NavigationAgent3D nav;
+
+
+
+    public override void _Ready()
+    {
+        GD.Print("calling parent ready function");
+
+        ActorControl.GetInstance().RegisterActor(this);
+    }
+
 
 
 

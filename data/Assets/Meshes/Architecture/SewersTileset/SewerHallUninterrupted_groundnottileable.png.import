@@ -2,13 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqq4cvpliekiy"
+uid="uid://cc1juvy47mdn2"
 path.s3tc="res://.godot/imported/SewerHallUninterrupted_groundnottileable.png-f7532c224ba5cfae2680949acb26c997.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 

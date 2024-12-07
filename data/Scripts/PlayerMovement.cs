@@ -6,38 +6,42 @@ public partial class PlayerMovement : CharacterBody3D
 	[Export] public float Speed = 5.0f;
 	[Export] public float SprintSpeed = 8.0f;
 	[Export] public float JumpVelocity = 4.5f;
-	public bool Sprinting;
-	public bool Crouching;
-	public float Stamina = 100f;
-	int health = 100;
-	public float mouseSensitivity = 0.01f;
-	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-	string cachedLastCol;
-	string lastCol;
-	public Node3D head;
-	public Camera3D camera;
-	float fovReset;
-	float headReset;
-	public CollisionShape3D standingCollision;
-	public CollisionShape3D crouchCollision;
+	private bool Sprinting = false;
+	private bool Crouching = false;
+	private float Stamina = 100f;
+	private int health = 100;
+	private float mouseSensitivity = 0.01f;
+	private float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	private string cachedLastCol;
+	private string lastCol;
+	private Node3D head;
+	private Camera3D camera;
+	private float fovReset;
+	private float headReset;
+	private CollisionShape3D standingCollision;
+	private CollisionShape3D crouchCollision;
 
-	TextureRect tex;
+	private TextureRect damageEffect;
 
-	public Marker3D headDeathMarker;
+	private Marker3D headDeathMarker;
+
+	private PlayerState playerState;
+
 	public override void _Ready()
 	{
+		playerState = PlayerState.ALIVE;
 		Input.MouseMode = Input.MouseModeEnum.Captured;
-		base._Ready();
+
 		head = GetNode<CollisionShape3D>("Head");
-		camera = GetNode<Camera3D>("Head/Camera3D");
+		camera = head.GetChild<Camera3D>(0);
+		damageEffect = camera.GetChild<TextureRect>(0);
 		standingCollision = GetNode<CollisionShape3D>("StandingCollision");
 		crouchCollision = GetNode<CollisionShape3D>("CrouchCollision");
 		headDeathMarker = GetNode<Marker3D>("HeadDeathMarker");
-		tex = camera.GetChild<TextureRect>(0);
-		//playerWeaponController = GetNode<PlayerWeaponController>("MeshInstance3D/Head/Camera3D/PlayerWeaponController");
+
 		fovReset = camera.Fov;
 		headReset = head.Position.Y;
-		Sprinting = false;
+
 	}
 	public override void _UnhandledInput(InputEvent @event)
 	{
@@ -77,43 +81,40 @@ public partial class PlayerMovement : CharacterBody3D
 		if (@event.IsActionReleased("player_sprint") && Sprinting == true) SprintSwitch();
 	}
 
-
-
 	public override void _PhysicsProcess(double delta)
 	{
 
 		if (health > 0)
 		{
-			Godot.Vector3 NewVelocity = Velocity;
-			if (!IsOnFloor()) NewVelocity.Y -= gravity * (float)delta;
-			if (Input.IsActionJustPressed("player_jump") && IsOnFloor()) NewVelocity.Y = JumpVelocity;
+			Godot.Vector3 velocity = Velocity;
+			if (!IsOnFloor()) velocity.Y -= gravity * (float)delta;
+			if (Input.IsActionJustPressed("player_jump") && IsOnFloor()) velocity.Y = JumpVelocity;
 			Godot.Vector2 inputDir = Input.GetVector("player_left", "player_right", "player_forward", "player_back");
 			Godot.Vector3 direction = (head.GlobalTransform.Basis * new Godot.Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 			if (direction != Godot.Vector3.Zero)
 			{
-				NewVelocity.X = direction.X * Speed;
-				NewVelocity.Z = direction.Z * Speed;
+				velocity.X = direction.X * Speed;
+				velocity.Z = direction.Z * Speed;
 			}
 			else
 			{
-				NewVelocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-				NewVelocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+				velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+				velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
 			}
-			NewVelocity.X = Mathf.Lerp(Velocity.X, NewVelocity.X, Convert.ToSingle(delta) * 100);
-			NewVelocity.Z = Mathf.Lerp(Velocity.Z, NewVelocity.Z, Convert.ToSingle(delta) * 100);
 
-			Velocity = NewVelocity;
+			velocity.X = Mathf.Lerp(Velocity.X, velocity.X, Convert.ToSingle(delta) * 100);
+			velocity.Z = Mathf.Lerp(Velocity.Z, velocity.Z, Convert.ToSingle(delta) * 100);
+
+			Velocity = velocity;
 			MoveAndSlide();
 		}
 		else
 		{
+			//Player dies. 
 			mouseSensitivity = 0.0005f;
 			head.Position = head.Position.Lerp(headDeathMarker.Position, 0.05f);
 
-			//send signal back to enemy -- stop going after player! 
-
 		}
-
 
 	}
 
@@ -160,8 +161,8 @@ public partial class PlayerMovement : CharacterBody3D
 
 	async void _on_monster_anim_01_attack_player_damage_indicator()
 	{
-		tex.Visible = true;
+		damageEffect.Visible = true;
 		await ToSignal(GetTree().CreateTimer(0.1f), "timeout"); //timers don't work properly with less than 1 second??? 
-		tex.Visible = false;
+		damageEffect.Visible = false;
 	}
 }
