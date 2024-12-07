@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\peter\\Documents\\Godot Projects\\TerrorGame\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}|TerrorGame.csproj|c:\\users\\peter\\documents\\godot projects\\terrorgame\\data\\scripts\\enemymoving.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}|TerrorGame.csproj|solutionrelative:data\\scripts\\enemymoving.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}|TerrorGame.csproj|c:\\users\\peter\\documents\\godot projects\\terrorgame\\data\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F96BF569-58ED-4957-8E9A-D49DBCEB4A31}|TerrorGame.csproj|solutionrelative:data\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EnemyMoving.cs",
+              "DocumentMoniker": "C:\\Users\\peter\\Documents\\Godot Projects\\TerrorGame\\data\\Scripts\\EnemyMoving.cs",
+              "RelativeDocumentMoniker": "data\\Scripts\\EnemyMoving.cs",
+              "ToolTip": "C:\\Users\\peter\\Documents\\Godot Projects\\TerrorGame\\data\\Scripts\\EnemyMoving.cs",
+              "RelativeToolTip": "data\\Scripts\\EnemyMoving.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T19:34:24.659Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlayerMovement.cs",
+              "DocumentMoniker": "C:\\Users\\peter\\Documents\\Godot Projects\\TerrorGame\\data\\Scripts\\PlayerMovement.cs",
+              "RelativeDocumentMoniker": "data\\Scripts\\PlayerMovement.cs",
+              "ToolTip": "C:\\Users\\peter\\Documents\\Godot Projects\\TerrorGame\\data\\Scripts\\PlayerMovement.cs",
+              "RelativeToolTip": "data\\Scripts\\PlayerMovement.cs",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAkwKAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T19:33:07.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
