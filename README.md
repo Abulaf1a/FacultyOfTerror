@@ -5,6 +5,11 @@ The player's fear (and therefore enjoyment) in horror games can be accentuated t
 My game will capitalise on this idea. Though it's not very original, I intend to create some interesting assets and locations that will hopefully set it apart and make it a joy to play. I'm not trying to 
 create the scariest game ever but a short, spooky and atmospheric experience with (some) puzzle gameplay (to be determined) and win/lose conditions. 
 
+
+# How to run/inspectG
+I am developing this on [Godot 4.3](https://godotengine.org/releases/4.3/). 
+Clone this repo, install Godot and open this repo as a project by pressing ctrl+I on the Godot splash screen and navigating to the downloaded (and unzipped) repo.  
+
 ## To do
 1. Refactoring existing code based on SOLID principles - especially splitting player and enemy scripts to follow separation of concerns
 2. Incorporating serialisable marker interfaces to make save implementation easier down the line
