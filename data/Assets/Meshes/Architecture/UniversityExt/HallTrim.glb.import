@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cliy3i4aywvjg"
-path="res://.godot/imported/HallCtrTrimR.glb-8a137fb490db3c8c390464819a101c3d.scn"
+uid="uid://dpxsq0qbb08ny"
+path="res://.godot/imported/HallTrim.glb-c34575702d5e72e0b6fbb131a9d2a6a7.scn"
 
 [deps]
 
-source_file="res://data/Assets/Meshes/Architecture/UniversityExt/HallCtrTrimR.glb"
-dest_files=["res://.godot/imported/HallCtrTrimR.glb-8a137fb490db3c8c390464819a101c3d.scn"]
+source_file="res://data/Assets/Meshes/Architecture/UniversityExt/HallTrim.glb"
+dest_files=["res://.godot/imported/HallTrim.glb-c34575702d5e72e0b6fbb131a9d2a6a7.scn"]
 
 [params]
 
@@ -18,6 +18,7 @@ nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
+nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true

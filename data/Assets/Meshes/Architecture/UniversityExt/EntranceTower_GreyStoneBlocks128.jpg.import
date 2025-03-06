@@ -2,13 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d301mhy7ytyh8"
+uid="uid://c838gwxq6hlci"
 path.s3tc="res://.godot/imported/EntranceTower_GreyStoneBlocks128.jpg-4b8cbab6d78b5ae986f68fb88fd340bf.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 

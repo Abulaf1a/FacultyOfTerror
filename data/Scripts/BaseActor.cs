@@ -4,8 +4,6 @@ using System;
 
 public abstract partial class BaseActor : CharacterBody3D
 {
-
-    //in abstract base classes, you can find methods in the abstract class as well. 
     [Export] public float Speed;
 
     [Export] public Node3D target;
@@ -17,18 +15,10 @@ public abstract partial class BaseActor : CharacterBody3D
     public float distToTarget;
     public NavigationAgent3D nav;
 
-
-
     public override void _Ready()
     {
-        GD.Print("calling parent ready function");
-
         ActorControl.GetInstance().RegisterActor(this);
     }
-
-
-
-
 }
 
 

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 #nullable enable
-public partial class EnemyMoving : BaseActor
+public partial class EnemyMoving : EnemyActor
 {
 
 	/// <summary>
@@ -15,13 +15,16 @@ public partial class EnemyMoving : BaseActor
 	/// ALL CLASSES SHOULD HAVE ONE JOB AND ONE JOB ONLY
 	/// A FINITE STATE MACHINE CLASS can be used to control and synchronise actions between these classes!
 	/// 
-	/// S
+	/// https://stackoverflow.com/questions/1212149/class-diagram-examples-for-rpg-role-playing-game
+	/// 
+	/// 
 	/// 
 	/// Enemy
 	/// - movement
 	/// - target selection
 	/// - animation selection
-	/// - state machine
+	/// - state machine? 
+	/// 	- target selection 
 	/// 
 	/// 
 	/// The states should be:
@@ -91,15 +94,13 @@ public partial class EnemyMoving : BaseActor
 	public override void _PhysicsProcess(double delta)
 	{
 		Godot.Vector3 velocity = Velocity;
-
 		if (!IsOnFloor()) velocity.Y -= gravity * (float)delta;
 
 		UpdatePlayerDist();
-
 		BodyTrack();
-
 		HeadTrack();
 
+		//Mantis specific logic for attacking the player.
 		if (distToTarget > targetDetectionRadius)
 		{
 			if (wandering == false)
@@ -117,29 +118,15 @@ public partial class EnemyMoving : BaseActor
 		else if (distToTarget <= targetDetectionRadius)
 		{
 			if (animationPlayer.CurrentAnimation != "Lurch") animationPlayer.Play("Lurch");
-
 			UpdateTargetPos();
-
 			if (wandering == true) wandering = false;
-
-		}
-
-		else
-		{
-			if (animationPlayer.CurrentAnimation != "Bite") animationPlayer.Play("Bite");
-
-			BeginPlayerAttack();
 		}
 
 		nav.TargetPosition = targetPos;
-
 		Godot.Vector3 direction = (nav.GetNextPathPosition() - GlobalPosition).Normalized();
-
 		velocity.X = Mathf.Lerp(velocity.X, direction.X * Speed, 0.5f);
 		velocity.Z = Mathf.Lerp(velocity.Z, direction.Z * Speed, 0.5f);
-
 		Velocity = velocity;
-
 		MoveAndSlide();
 	}
 
@@ -152,14 +139,6 @@ public partial class EnemyMoving : BaseActor
 		targetPos.Y = GlobalPosition.Y;
 
 		GD.Print(targetPos);
-	}
-
-	async void BeginPlayerAttack()
-	{
-
-		await ToSignal(GetTree().CreateTimer(animationPlayer.CurrentAnimationLength * 2), "timeout");
-
-		EmitSignal(SignalName.AttackPlayer);
 	}
 
 	void BodyTrack()
@@ -207,9 +186,8 @@ public partial class EnemyMoving : BaseActor
 	public void UpdateTargetPos()
 	{
 		targetPos = target.GlobalPosition;
-		//targetPos.Y = GlobalPosition.Y;
 	}
-
+	
 	public void _on_actor_marker_body_entered(Node3D actor)
 	{
 		if (actor.Name == "Player")

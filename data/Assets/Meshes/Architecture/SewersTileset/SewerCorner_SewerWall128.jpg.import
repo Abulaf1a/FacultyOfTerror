@@ -2,13 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://550s4dpxatgo"
+uid="uid://c5qf3nb5g0o54"
 path.s3tc="res://.godot/imported/SewerCorner_SewerWall128.jpg-6f91c0cef4e61bca9a083e362ffdb774.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 
