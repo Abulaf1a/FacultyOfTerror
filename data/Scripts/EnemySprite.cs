@@ -9,7 +9,7 @@ public partial class EnemySprite : EnemyActor
 	public delegate void AttackPlayerEventHandler();
 	[Signal]
 	public delegate void AttackPlayerDamageIndicatorEventHandler();
-	private CollisionShape3D? collision;
+	private CollisionShape3D collision;
 	[Export] private int targetDetectionRadius = 5;
 	[Export] private float bulletSpeed = 3f; 
 	private Godot.Collections.Array navMesh;
