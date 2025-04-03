@@ -38,7 +38,7 @@ public partial class Interactor : Area3D {
             return closest;
         }
 
-        GD.Print("returning null"); 
+        //GD.Print("returning null"); 
 
         return null; 
         

@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Runtime.ExceptionServices;
+using System.Security.Cryptography;
 
 public partial class EnemySprite : EnemyActor
 {
@@ -9,32 +11,34 @@ public partial class EnemySprite : EnemyActor
 	public delegate void AttackPlayerDamageIndicatorEventHandler();
 	private CollisionShape3D? collision;
 	[Export] private int targetDetectionRadius = 5;
+	[Export] private float bulletSpeed = 3f; 
 	private Godot.Collections.Array navMesh;
-
-    //wander targets
 	private float resetWanderTarget = 0;
 	private Random rand = new Random();
 	private Godot.Collections.Array<Node> wanderTargets;
 	private bool wandering;
 	private Timer timer;
+	private bool fired; 
 
+
+	PackedScene projectile;
 	public override void _Ready()
 	{
+		fired = false; 
 		try
 		{
-
+			projectile = GD.Load<PackedScene>("res://data/Assets/Sprites/ProjectileSprite.tscn"); 
 			collision = GetNode<CollisionShape3D>("CollisionShape3D");
-
 			ray = GetNode<RayCast3D>("RayCast3D");
-
 			nav = GetNode<NavigationAgent3D>("NavigationAgent3D");
-
 			targetPos = target.Position;
-
             wanderTargets = GetTree().GetNodesInGroup("Marker");
+		}
+		catch(Exception e) { 
+
+			GD.Print("error in enemy sprite: " + e.Message); 
 
 		}
-		catch { GD.Print("error"); }
 
 		base._Ready();
 
@@ -44,35 +48,38 @@ public partial class EnemySprite : EnemyActor
 	{
 		Godot.Vector3 velocity = Velocity;
 		if (!IsOnFloor()) velocity.Y -= gravity * (float)delta;
-
 		UpdatePlayerDist();
-		
-		//Mantis specific logic for attacking the player.
-		// if (distToTarget > targetDetectionRadius)
-		// {
-		// 	if (wandering == false)
-		// 	{
-		// 		UpdateWanderTargetPos();
-		// 		wandering = true;
-		// 	}
-		// 	targetPos.Y = GlobalPosition.Y;
+		if(distToTarget < 5 && !fired){
+			fired = true; //TODO create cooldown mechanic + lineofsight 
+			FireProjectile(); 
+		}
 
-		// }
+		else if(distToTarget > 6){
+			fired = false; 
+		}
 
-		//else if (distToTarget <= targetDetectionRadius)
-		//{
-			UpdateTargetPos();
-		// 	if (wandering == true) wandering = false;
-		// }
+		UpdateTargetPos();
 
 		nav.TargetPosition = targetPos;
-        GD.Print("Target pos" + targetPos); 
 		Godot.Vector3 direction = (nav.GetNextPathPosition() - GlobalPosition).Normalized();
 		velocity.X = Mathf.Lerp(velocity.X, direction.X * Speed, 0.5f);
 		velocity.Z = Mathf.Lerp(velocity.Z, direction.Z * Speed, 0.5f);
 		Velocity = velocity;
 		MoveAndSlide();
+
+		LookAt(targetPos); 
 	}
+
+	void FireProjectile(){
+
+		var projectileInstance = Projectile.NewProjectile(bulletSpeed, projectile); 
+
+		AddSibling(projectileInstance); 
+
+		projectileInstance.Transform = Transform; 
+
+		projectileInstance.GlobalPosition = GlobalPosition;
+    }
 
 	void UpdateWanderTargetPos()
 	{
@@ -81,8 +88,6 @@ public partial class EnemySprite : EnemyActor
 		targetPos = (wanderTargets[i] as Node3D).GlobalPosition;
 
 		targetPos.Y = GlobalPosition.Y;
-
-		GD.Print(targetPos);
 	}
 
 	public void UpdatePlayerDist()
@@ -99,13 +104,12 @@ public partial class EnemySprite : EnemyActor
 	{
 		if (actor.Name == "Player")
 		{
-			GD.Print("player entered actormarker");
+			//GD.Print("player entered actormarker");
 		}
 		else if (actor.Name == "Mantis")
 		{
-			GD.Print("mantis entered actormarker");
+			//GD.Print("mantis entered actormarker");
 			UpdateWanderTargetPos();
 		}
 	}
 }
-
