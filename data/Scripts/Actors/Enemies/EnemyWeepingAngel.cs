@@ -4,10 +4,10 @@ using System.Diagnostics;
 public partial class EnemyWeepingAngel : EnemyActor
 {
 
-	public AnimationPlayer animationPlayer;
-	CollisionShape3D collision;
-	bool visible;
-	bool pause;
+	private AnimationPlayer animationPlayer;
+	private CollisionShape3D collision;
+	private bool visible;
+	private bool pause;
 
 	double angerTimer;
 	public override void _Ready()
@@ -26,6 +26,7 @@ public partial class EnemyWeepingAngel : EnemyActor
 		{
 			UpdateAnimation();
 		}
+		
 		//only need to change anims if in player's pov/ around player
 		angerTimer = UpdateAngerTimer(playerPos);
 

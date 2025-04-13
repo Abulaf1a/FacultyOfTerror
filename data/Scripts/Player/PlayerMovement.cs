@@ -3,9 +3,9 @@ using System;
 
 public partial class PlayerMovement : CharacterBody3D
 {
-	[Export] public float Speed = 5.0f;
-	[Export] public float SprintSpeed = 8.0f;
-	[Export] public float JumpVelocity = 4.5f;
+	[Export] private float Speed = 5.0f;
+	[Export] private float SprintSpeed = 8.0f;
+	[Export] private float JumpVelocity = 4.5f;
 	private bool Sprinting = false;
 	private bool Crouching = false;
 	private float Stamina = 100f;
@@ -20,13 +20,10 @@ public partial class PlayerMovement : CharacterBody3D
 	private float headReset;
 	private CollisionShape3D standingCollision;
 	private CollisionShape3D crouchCollision;
-
 	private TextureRect damageEffect;
-
 	private Marker3D headDeathMarker;
-
 	private PlayerState playerState = PlayerState.ALIVE;
-
+	
 	public override void _Ready()
 	{
 

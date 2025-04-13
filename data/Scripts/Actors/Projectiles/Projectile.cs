@@ -10,18 +10,18 @@ public partial class Projectile : RigidBody3D
 {
     //die after a certain timer. 
     
-    Boolean free; 
+    private Boolean free; 
 
-    Vector3 target;
+    private Vector3 target;
 
-    Vector3 direction; 
+    private Vector3 direction; 
 
-    Vector3 _position = new Vector3(); 
+    private Vector3 _position = new Vector3(); 
 
 
-    CollisionShape3D collision; 
+    private CollisionShape3D collision; 
 
-    float step; 
+    private float step; 
 
     //helper static class allows me to create a projectile.
     public static Projectile NewProjectile(float step, PackedScene scene){

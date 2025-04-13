@@ -7,8 +7,8 @@ public partial class Interactor : Area3D {
     //keeps track of closes interactable to the player
     //sends focus, unfocus and interact signals to applicable interactables.
     
-    public CharacterBody3D controller; 
-    Interactable closest; 
+    protected CharacterBody3D controller; 
+    private Interactable closest; 
     public void Interact(Interactable interactable){
         interactable.EmitSignal(Interactable.SignalName.Interact, this);  
     }

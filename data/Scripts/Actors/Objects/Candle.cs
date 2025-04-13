@@ -4,13 +4,13 @@ using System;
 public partial class Candle : Node3D
 {
 
-    OmniLight3D effect; //effect
+    private OmniLight3D effect; //effect
 
-    MeshInstance3D material;
+    private MeshInstance3D material;
 
-    [Export] Material highlight;
+    [Export] private Material highlight;
 
-    [Export] Material normal; 
+    [Export] private Material normal; 
 
     public override void _Ready(){
 

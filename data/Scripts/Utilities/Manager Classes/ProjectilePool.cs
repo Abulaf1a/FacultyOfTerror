@@ -7,14 +7,10 @@ using Godot;
 public partial class ProjectilePool : Node3D {
 
 
-    static ProjectilePool projectilePool; 
-
-
-    static List<Projectile> projectiles; 
-
-    static PackedScene scene; 
-
-    static int limit = 10; 
+    private static ProjectilePool projectilePool; 
+    private static List<Projectile> projectiles; 
+    private static PackedScene scene; 
+    private static int limit = 10; //extract to debug setting
 
     public ProjectilePool(){
         projectiles = new List<Projectile>(); 
@@ -46,12 +42,9 @@ public partial class ProjectilePool : Node3D {
 
     public Projectile FireProjectile(float bulletSpeed, Transform3D transform){
 
-        GD.Print("pool count: " + projectiles.Count);
-
         if(projectiles.Count < limit){
 
             Projectile projectile = Projectile.NewProjectile(bulletSpeed, scene); 
-
             projectiles.Add(projectile); 
 
             return projectile; 
@@ -77,10 +70,7 @@ public partial class ProjectilePool : Node3D {
 
         //location and target passed into this method from enemysprite. 
 
-
-        //
     }
-
 
     int CheckFreeObjectExists(){
 
@@ -91,11 +81,4 @@ public partial class ProjectilePool : Node3D {
         }
         return -1; 
     }
-
-
-
-
-    
-
-
 }

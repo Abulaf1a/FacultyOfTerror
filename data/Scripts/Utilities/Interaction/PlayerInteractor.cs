@@ -4,15 +4,14 @@ using Godot;
 
 public partial class PlayerInteractor : Interactor {
 
-    Interactable cached; 
+    private Interactable cached; 
 
-    [Export] CharacterBody3D player; 
+    [Export] public CharacterBody3D player; 
 
     public override void _Ready() {
 
         controller = player;
         cached = GetClosest();
-       // base._Ready();
     }
 
     public override void _PhysicsProcess(double delta){
@@ -29,11 +28,6 @@ public partial class PlayerInteractor : Interactor {
             cached = null; 
         }
 
-
-
-       // base._PhysicsProcess(delta); 
-
-
     }
 
     public override void _Input(InputEvent @event)
@@ -41,6 +35,5 @@ public partial class PlayerInteractor : Interactor {
         if(@event.IsActionPressed("player_interact") && cached != null){
             Interact(cached);
         }
-       // base._Input(@event);
     }
 }
