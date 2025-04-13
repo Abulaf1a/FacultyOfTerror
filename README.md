@@ -10,9 +10,4 @@ create the scariest game ever but a short, spooky and atmospheric experience wit
 I am developing this on [Godot 4.3](https://godotengine.org/releases/4.3/). 
 Clone this repo, install Godot and open this repo as a project by pressing ctrl+I on the Godot splash screen and navigating to the downloaded (and unzipped) repo.  
 
-## To do
-1. Refactoring existing code based on SOLID principles - especially splitting player and enemy scripts to follow separation of concerns
-2. Incorporating serialisable marker interfaces to make save implementation easier down the line
-3. Implementing item interaction from previous project
-4. Finishing architectural asset exterior and interior tilesets
-5. Lighting/Music/UI/Save/smarter enemy AI, the list goes on. 
+
