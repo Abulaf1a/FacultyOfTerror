@@ -9,6 +9,9 @@ using System.Linq.Expressions;
 public partial class Projectile : RigidBody3D
 {
     //die after a certain timer. 
+    
+    Boolean free; 
+
     Vector3 target;
 
     Vector3 direction; 
@@ -35,7 +38,7 @@ public partial class Projectile : RigidBody3D
     public override void _Ready()
     {
 
-        ProjectileManager.Register(this); 
+        ProjectilePool.Register(this); 
 
         collision = GetNode<CollisionShape3D>("CollisionShape3D"); 
         base._Ready();
@@ -57,7 +60,34 @@ public partial class Projectile : RigidBody3D
     public void _on_body_entered(float step){
         GD.Print("on body entered called"); 
 
-        QueueFree(); //todo create a recycler/ 
+        Release(); //releases the object from being used (disappear and pause)
+
+       
+    }
+
+    public void Reuse(){ 
+
+        Visible = true; 
+
+        SetPhysicsProcess(true); 
+
+        free = false; 
+    }
+
+    public Boolean IsFree(){
+        return free; 
+    }
+
+    public void Release(){
+
+        Visible = false; 
+
+        Transform = new Transform3D();
+
+        SetPhysicsProcess(false);
+
+        free = true; 
+
     }
 
 

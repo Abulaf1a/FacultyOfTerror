@@ -1,7 +1,6 @@
 using Godot;
 using System;
-using System.Runtime.ExceptionServices;
-using System.Security.Cryptography;
+
 
 public partial class EnemySprite : EnemyActor
 {
@@ -72,9 +71,16 @@ public partial class EnemySprite : EnemyActor
 
 	void FireProjectile(){
 
-		var projectileInstance = Projectile.NewProjectile(bulletSpeed, projectile); 
+		ProjectilePool projectilePool = ProjectilePool.GetInstance(); 
 
-		AddSibling(projectileInstance); 
+		var projectileInstance = projectilePool.FireProjectile(bulletSpeed, Transform);
+		
+		try{
+			AddSibling(projectileInstance); 
+		}
+		catch{
+			//do nothing! 
+		}		
 
 		projectileInstance.Transform = Transform; 
 
