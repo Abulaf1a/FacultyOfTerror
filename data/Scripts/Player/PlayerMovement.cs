@@ -25,11 +25,11 @@ public partial class PlayerMovement : CharacterBody3D
 
 	private Marker3D headDeathMarker;
 
-	private PlayerState playerState;
+	private PlayerState playerState = PlayerState.ALIVE;
 
 	public override void _Ready()
 	{
-		playerState = PlayerState.ALIVE;
+
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 
 		head = GetNode<CollisionShape3D>("Head");
@@ -137,17 +137,17 @@ public partial class PlayerMovement : CharacterBody3D
 	}
 	public void CrouchSwitch()
 	{
-		if (Crouching == false)
+		var CrouchTween = CreateTween();
+
+		if (!Crouching)
 		{
-			var CrouchDownTween = CreateTween();
-			CrouchDownTween.TweenProperty(head, "position:y", head.Position.Y - 0.5f, 0.1f);
+			CrouchTween.TweenProperty(head, "position:y", head.Position.Y - 0.5f, 0.1f);
 			crouchCollision.Disabled = false;
 			standingCollision.Disabled = true;
 		}
-		else if (Crouching == true)
+		else
 		{
-			var CrouchUpTween = CreateTween();
-			CrouchUpTween.TweenProperty(head, "position:y", headReset, 0.1f);
+			CrouchTween.TweenProperty(head, "position:y", headReset, 0.1f);
 			crouchCollision.Disabled = true;
 			standingCollision.Disabled = false;
 		}

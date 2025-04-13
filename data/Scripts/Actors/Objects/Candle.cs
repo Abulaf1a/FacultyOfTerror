@@ -20,7 +20,7 @@ public partial class Candle : Node3D
     }
     public void _on_interactable_focused(Area3D interactor){
 
-        GD.Print("focused"); 
+        //GD.Print("focused"); 
         material.MaterialOverlay = highlight;
 
     }
