@@ -7,9 +7,7 @@ using System.Linq.Expressions;
 //this is used if a type requires a parameter to create an instance, which is true here because 
 //I don't want a projectile without a target! 
 public partial class Projectile : RigidBody3D
-{
-    //die after a certain timer. 
-    
+{    
     private Boolean free; 
 
     private Vector3 target;
@@ -23,7 +21,7 @@ public partial class Projectile : RigidBody3D
 
     private float step; 
 
-    //helper static class allows me to create a projectile.
+    //helper static class to create projectile.
     public static Projectile NewProjectile(float step, PackedScene scene){
 
         var projectileInstance = scene.Instantiate<Projectile>(); 
@@ -58,11 +56,8 @@ public partial class Projectile : RigidBody3D
     }
 
     public void _on_body_entered(float step){
-        GD.Print("on body entered called"); 
-
         Release(); //releases the object from being used (disappear and pause)
 
-       
     }
 
     public void Reuse(){ 

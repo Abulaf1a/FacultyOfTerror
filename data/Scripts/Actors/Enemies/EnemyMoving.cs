@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 public partial class EnemyMoving : EnemyActor
 {
 
+	//Enemy Mantis 
+	
 	/// <summary>
 	/// TODO: Separate animation functions into separate class -- this class should deal with enemy movement ONLY 
 	/// Separate movement targets to separate class - target acquisition class, the enemy should then communicate between classes using INSTANCE 

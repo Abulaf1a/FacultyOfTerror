@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 
 public partial class EnemySprite : EnemyActor
@@ -32,6 +33,8 @@ public partial class EnemySprite : EnemyActor
 			nav = GetNode<NavigationAgent3D>("NavigationAgent3D");
 			targetPos = target.Position;
             wanderTargets = GetTree().GetNodesInGroup("Marker");
+			timer = GetNode<Timer>("Timer"); 
+
 		}
 		catch(Exception e) { 
 
@@ -43,18 +46,29 @@ public partial class EnemySprite : EnemyActor
 
 	}
 
+	//enemy firing logic, 
+	// if player is within X range, and cooldown timer has expired, and ray to player intercepts player, 
+	// fire. 
+
+
 	public override void _PhysicsProcess(double delta)
 	{
 		Godot.Vector3 velocity = Velocity;
 		if (!IsOnFloor()) velocity.Y -= gravity * (float)delta;
 		UpdatePlayerDist();
-		if(distToTarget < 5 && !fired){
-			fired = true; //TODO create cooldown mechanic + lineofsight 
-			FireProjectile(); 
-		}
 
-		else if(distToTarget > 6){
-			fired = false; 
+
+		Vector3 targetLocal = ray.ToLocal(targetPos);  
+
+		ray.TargetPosition = targetLocal; 
+
+		if(!fired){
+
+			TryFire(); 
+
+			
+
+
 		}
 
 		UpdateTargetPos();
@@ -69,18 +83,38 @@ public partial class EnemySprite : EnemyActor
 		LookAt(targetPos); 
 	}
 
+	//called every physics tick between timer timeout and a successful fire. 
+	bool TryFire(){
+
+		GodotObject c = ray.GetCollider();
+
+		if(c is Node3D){
+			Node3D check = (Node3D)c; 
+			if(check.IsInGroup("Player") && distToTarget < targetDetectionRadius){
+				Debug.WriteLine("is in player group" ); 
+
+				FireProjectile(); 
+
+				timer.Start(); 
+
+				fired = true; 
+
+				return true; 
+			}
+		}
+		
+		return false; 
+	}
+
 	void FireProjectile(){
 
 		ProjectilePool projectilePool = ProjectilePool.GetInstance(); 
 
 		var projectileInstance = projectilePool.FireProjectile(bulletSpeed, Transform);
-		
-		try{
+
+		if(!projectileInstance.IsInsideTree()){
 			AddSibling(projectileInstance); 
 		}
-		catch{
-			//do nothing! 
-		}		
 
 		projectileInstance.Transform = Transform; 
 
@@ -117,5 +151,12 @@ public partial class EnemySprite : EnemyActor
 			//GD.Print("mantis entered actormarker");
 			UpdateWanderTargetPos();
 		}
+	}
+
+	public void _on_timer_timeout(){
+
+		fired = false; 
+
+		
 	}
 }
