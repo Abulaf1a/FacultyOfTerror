@@ -1,6 +1,7 @@
 using Godot;
 using Godot.NativeInterop;
 using System;
+using System.Formats.Tar;
 using System.Linq.Expressions;
 
 //note on C# syntax - having target in the class declaration is called a 'primary constructor',
@@ -16,15 +17,17 @@ public partial class Projectile : RigidBody3D
 
     private Vector3 _position = new Vector3(); 
 
-
     private CollisionShape3D collision; 
 
     private float step; 
-
+    
+    private string pType;
     //helper static class to create projectile.
     public static Projectile NewProjectile(float step, PackedScene scene){
 
         var projectileInstance = scene.Instantiate<Projectile>(); 
+
+        projectileInstance.SetPType(scene.ResourceName);
 
         projectileInstance.SetStep(step); 
 
@@ -45,6 +48,14 @@ public partial class Projectile : RigidBody3D
     public void SetStep(float step){
 
         this.step = step; 
+    }
+
+    public void SetPType(string pType){
+        this.pType = pType; 
+    }
+
+    public string GetPType(){
+        return pType; 
     }
 
     public override void _PhysicsProcess(double delta)

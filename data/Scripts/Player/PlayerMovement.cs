@@ -30,7 +30,9 @@ public partial class PlayerMovement : CharacterBody3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 
 		head = GetNode<CollisionShape3D>("Head");
-		camera = head.GetChild<Camera3D>(0);
+
+		camera = head.GetNode<Camera3D>("Camera3D");
+		//camera = head.GetChild<Camera3D>(0);
 		damageEffect = camera.GetChild<TextureRect>(0);
 		standingCollision = GetNode<CollisionShape3D>("StandingCollision");
 		crouchCollision = GetNode<CollisionShape3D>("CrouchCollision");

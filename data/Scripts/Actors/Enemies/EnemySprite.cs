@@ -66,8 +66,7 @@ public partial class EnemySprite : EnemyActor
 
 			TryFire(); 
 
-			
-
+	
 
 		}
 
@@ -91,7 +90,7 @@ public partial class EnemySprite : EnemyActor
 		if(c is Node3D){
 			Node3D check = (Node3D)c; 
 			if(check.IsInGroup("Player") && distToTarget < targetDetectionRadius){
-				Debug.WriteLine("is in player group" ); 
+				// Debug.WriteLine("is in player group" ); 
 
 				FireProjectile(); 
 
@@ -101,8 +100,12 @@ public partial class EnemySprite : EnemyActor
 
 				return true; 
 			}
+			else if(check.IsInGroup("Enemy")){
+				return false; 
+
+			}
 		}
-		
+
 		return false; 
 	}
 
@@ -110,15 +113,8 @@ public partial class EnemySprite : EnemyActor
 
 		ProjectilePool projectilePool = ProjectilePool.GetInstance(); 
 
-		var projectileInstance = projectilePool.FireProjectile(bulletSpeed, Transform);
+		projectilePool.FireProjectile(bulletSpeed, this, GD.Load<PackedScene>("res://data/Assets/Sprites/ProjectileSprite.tscn"));
 
-		if(!projectileInstance.IsInsideTree()){
-			AddSibling(projectileInstance); 
-		}
-
-		projectileInstance.Transform = Transform; 
-
-		projectileInstance.GlobalPosition = GlobalPosition;
     }
 
 	void UpdateWanderTargetPos()
@@ -140,6 +136,7 @@ public partial class EnemySprite : EnemyActor
 		targetPos = target.GlobalPosition;
 	}
 	
+	//unused 
 	public void _on_actor_marker_body_entered(Node3D actor)
 	{
 		if (actor.Name == "Player")
@@ -157,6 +154,5 @@ public partial class EnemySprite : EnemyActor
 
 		fired = false; 
 
-		
 	}
 }

@@ -10,7 +10,7 @@ public partial class ProjectilePool : Node3D {
     private static ProjectilePool projectilePool; 
     private static List<Projectile> projectiles; 
     private static PackedScene scene; 
-    private static int limit = 10; //extract to debug setting
+    private static int limit = 1000; //extract to debug setting
 
     public ProjectilePool(){
         projectiles = new List<Projectile>(); 
@@ -18,7 +18,9 @@ public partial class ProjectilePool : Node3D {
 
     public static ProjectilePool GetInstance(){
         if(projectilePool == null){
-            projectilePool = new ProjectilePool(); 
+            projectilePool = new ProjectilePool();
+
+             
             scene = GD.Load<PackedScene>("res://data/Assets/Sprites/ProjectileSprite.tscn"); 
 
         }
@@ -40,7 +42,29 @@ public partial class ProjectilePool : Node3D {
 
     }
 
-    public Projectile FireProjectile(float bulletSpeed, Transform3D transform){
+    public Projectile FireProjectile(float bulletSpeed, Node3D parent, PackedScene projectileType){
+
+        scene = projectileType; 
+
+        Projectile projectile = GetProjectileToUse(bulletSpeed); 
+
+        GD.Print("projectile: " + projectile.Name);
+
+        if(!projectile.IsInsideTree()){
+            parent.GetTree().Root.AddChild(projectile);
+            
+        }
+
+        projectile.GlobalTransform = parent.GlobalTransform;
+
+        return projectile; 
+
+    }
+
+    private Projectile GetProjectileToUse(float bulletSpeed){
+
+        GD.Print(projectiles.Count + " projectiles in scene"); 
+
 
         if(projectiles.Count < limit){
 
@@ -52,30 +76,27 @@ public partial class ProjectilePool : Node3D {
 
         int position = CheckFreeObjectExists(); 
 
+
+//still doesn't deal with checking the projectile at position 0 is the same type as the projectile to instantiate.
         if(position > 0){
             projectiles[position].Reuse(); 
+            projectiles[position].SetStep(bulletSpeed); 
             return projectiles[position];
         } 
       
         projectiles[0].Reuse();
+        projectiles[0].SetStep(bulletSpeed); 
+
         return projectiles[0];
+
         
-        //if a free projectile exists in the pool, use it, change the location etc. 
-
-        //else, if there are fewer projectiles than the limit, add a new projectile
-
-        //else delete/reuse the oldest projectile or projectile furthest from the player
-        //if using furthest from player - i need to figure out how to quickly work out furthest projectile from player. 
-
-
-        //location and target passed into this method from enemysprite. 
-
     }
 
     int CheckFreeObjectExists(){
 
+
         for(int i = 0; i < projectiles.Count; i++){
-            if(projectiles[i].IsFree()){
+            if(projectiles[i].IsFree() && projectiles[i].GetPType() == scene.ResourceName){
                 return i; 
             }
         }
