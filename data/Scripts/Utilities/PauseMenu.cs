@@ -30,7 +30,7 @@ public partial class PauseMenu : Control
 	{
 		GetTree().Quit();
 	}
-	public void _on_continue_pressed()//identical snippet of code in SceneHandler opens the pause menu in the first place, dealing with 'esc' key presses. 
+	public void _on_continue_pressed()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		canvasLayer.Hide();

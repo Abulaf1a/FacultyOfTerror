@@ -50,6 +50,7 @@ public partial class PlayerMovement : CharacterBody3D
 			//rotates head and cam.
 			camera.RotateX(-eventMouseMotion.Relative.Y * mouseSensitivity);
 			head.RotateY(-eventMouseMotion.Relative.X * mouseSensitivity);
+			
 			//clamps rotation within allowed degrees.
 			Godot.Vector3 cameraRotation = camera.Rotation;
 			cameraRotation.X = Mathf.Clamp(cameraRotation.X, Mathf.DegToRad(-80), Mathf.DegToRad(80)); //has broken! 
@@ -114,6 +115,11 @@ public partial class PlayerMovement : CharacterBody3D
 			head.Position = head.Position.Lerp(headDeathMarker.Position, 0.05f);
 
 		}
+
+	}
+
+	//returns the velocity of this object, eg. the change in position between the last physics frame and this one.
+	public void GetVelocity(){
 
 	}
 

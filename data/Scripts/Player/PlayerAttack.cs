@@ -4,12 +4,10 @@ using System.Diagnostics;
 
 public partial class PlayerAttack : Node3D
 {
-    // Declare member variables here. Examples:
-    // private int damage = 10;
 
     [Export] private int damage = 10; 
 
-    [Export] private float bulletSpeed = 10f; //add/ remove player speed from movement speed. 
+    [Export] private float bulletSpeed = 10f; 
 
     private Timer timer; 
 
@@ -62,10 +60,9 @@ public partial class PlayerAttack : Node3D
 
         ProjectilePool projectilePool = ProjectilePool.GetInstance(); 
 
-		projectilePool.FireProjectile(bulletSpeed, this, GD.Load<PackedScene>("res://data/Assets/Sprites/PlayerProjectileSprite.tscn")); 
+        CharacterBody3D player = (CharacterBody3D) FindParent("Player");//get player node
 
-
-
+		projectilePool.FireProjectile(bulletSpeed, this, player.Velocity, GD.Load<PackedScene>("res://data/Assets/Sprites/PlayerProjectileSprite.tscn")); 
 
     }
 }

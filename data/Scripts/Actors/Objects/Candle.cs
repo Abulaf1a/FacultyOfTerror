@@ -4,6 +4,9 @@ using System;
 public partial class Candle : Node3D
 {
 
+    /// <summary>
+    /// Example/ test demonstration of interact function
+    /// </summary>
     private OmniLight3D effect; 
 
     private MeshInstance3D material;

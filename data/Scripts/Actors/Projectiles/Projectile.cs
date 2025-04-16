@@ -4,9 +4,7 @@ using System;
 using System.Formats.Tar;
 using System.Linq.Expressions;
 
-//note on C# syntax - having target in the class declaration is called a 'primary constructor',
-//this is used if a type requires a parameter to create an instance, which is true here because 
-//I don't want a projectile without a target! 
+
 public partial class Projectile : RigidBody3D
 {    
     private Boolean free; 
@@ -19,6 +17,8 @@ public partial class Projectile : RigidBody3D
 
     private CollisionShape3D collision; 
 
+    //private float initialVelocity; 
+
     private float step; 
     
     private string pType;
@@ -26,6 +26,8 @@ public partial class Projectile : RigidBody3D
     public static Projectile NewProjectile(float step, PackedScene scene){
 
         var projectileInstance = scene.Instantiate<Projectile>(); 
+
+        //projectileInstance.SetInitialVelocity(initialVelocity);
 
         projectileInstance.SetPType(scene.ResourceName);
 
@@ -35,6 +37,10 @@ public partial class Projectile : RigidBody3D
 
         return projectileInstance; 
     }
+
+    // public void SetInitialVelocity(float initialVelocity){
+    //     this.initialVelocity = initialVelocity; 
+    // }
 
     public override void _Ready()
     {
@@ -66,7 +72,16 @@ public partial class Projectile : RigidBody3D
         base._PhysicsProcess(delta);
     }
 
-    public void _on_body_entered(float step){
+    public void _on_body_entered(Node body){
+
+        //send damage signal to object hit.
+
+        GD.Print("Projectile hit: " + body.Name);
+
+
+        
+
+
         Release(); //releases the object from being used (disappear and pause)
 
     }

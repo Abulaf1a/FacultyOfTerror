@@ -4,8 +4,11 @@ using Godot.Collections;
 
 public partial class Interactor : Area3D {
 
-    //keeps track of closes interactable to the player
-    //sends focus, unfocus and interact signals to applicable interactables.
+    /// <summary>
+    /// keeps track of closes interactable to the player
+    /// sends focus, unfocus and interact signals to applicable interactables.
+    /// </summary>
+    
     
     protected CharacterBody3D controller; 
     private Interactable closest; 

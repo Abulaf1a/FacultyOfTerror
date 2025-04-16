@@ -7,35 +7,9 @@ using System.Runtime.CompilerServices;
 public partial class EnemyMoving : EnemyActor
 {
 
-	//Enemy Mantis 
 	
 	/// <summary>
-	/// TODO: Separate animation functions into separate class -- this class should deal with enemy movement ONLY 
-	/// Separate movement targets to separate class - target acquisition class, the enemy should then communicate between classes using INSTANCE 
-	/// that are connected in _Ready() function. 
-	/// 
-	/// ALL CLASSES SHOULD HAVE ONE JOB AND ONE JOB ONLY
-	/// A FINITE STATE MACHINE CLASS can be used to control and synchronise actions between these classes!
-	/// 
-	/// https://stackoverflow.com/questions/1212149/class-diagram-examples-for-rpg-role-playing-game
-	/// 
-	/// 
-	/// 
-	/// Enemy
-	/// - movement
-	/// - target selection
-	/// - animation selection
-	/// - state machine? 
-	/// 	- target selection 
-	/// 
-	/// 
-	/// The states should be:
-	/// - walking 
-	/// 	- following target
-	/// 	- following player
-	/// - attacking
-	/// - dead
-	/// - resting
+	/// This class is for the mantis enemy.
 	/// 
 	/// </summary>
 
