@@ -1,9 +1,10 @@
 using Godot;
 using System;
 
-public partial class PlayerMovement : CharacterBody3D
+public partial class PlayerMovement : CharacterBody3D, IDamageable
 {
-	[Export] private float Speed = 5.0f;
+	[Export] private float WalkSpeed = 5.0f;
+ 	private float Speed;
 	[Export] private float SprintSpeed = 8.0f;
 	[Export] private float JumpVelocity = 4.5f;
 	private bool Sprinting = false;
@@ -27,6 +28,7 @@ public partial class PlayerMovement : CharacterBody3D
 	public override void _Ready()
 	{
 
+		Speed = WalkSpeed; 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 
 		head = GetNode<CollisionShape3D>("Head");
@@ -118,19 +120,24 @@ public partial class PlayerMovement : CharacterBody3D
 
 	}
 
+
+
+	/// <summary>
+	/// Sprinting and crouching
+	/// </summary>
 	public void SprintSwitch()
 	{
 		if (Sprinting == false)
 		{
 			Sprinting = true;
-			Speed = 8f;
+			Speed = SprintSpeed;
 			var FovIncTween = CreateTween();
 			FovIncTween.TweenProperty(camera, "fov", camera.Fov + 10f, 0.5f);
 		}
 		else if (Sprinting == true)
 		{
 			Sprinting = false;
-			Speed = 5.0f;
+			Speed = WalkSpeed;
 			var FovDecTween = CreateTween();
 			FovDecTween.TweenProperty(camera, "fov", fovReset, 0.2f);
 		}
@@ -153,10 +160,52 @@ public partial class PlayerMovement : CharacterBody3D
 		}
 	}
 
+
+	
+	/// Damageable interface methods
+	/// 
+	public void TakeDamage(int damage){
+		health -= damage; 
+		// GD.Print("player damaged: health = " + health);
+	}
+
+	public void Heal(int heal)
+	{
+		health += heal;
+		// GD.Print("health = " + health);
+	}
+	public int GetHealth()
+	{
+		return health;
+	}
+	public int GetMaxHealth()
+	{
+		return 100;
+	}
+
+	public bool IsDead()
+	{
+		if (health <= 0) return true;
+		else return false;
+	}
+	public void Die()
+	{
+		health = 0;
+		// GD.Print("Player is dead");
+		playerState = PlayerState.DEAD;
+	}
+	
+
+
+
+	/// <summary>
+	/// Signals: 
+	/// </summary>
+
 	void _on_monster_anim_01_attack_player()
 	{
 		health -= 10;
-		GD.Print("health = " + health);
+		// GD.Print("health = " + health);
 	}
 
 	async void _on_monster_anim_01_attack_player_damage_indicator()

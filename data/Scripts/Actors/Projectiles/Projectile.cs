@@ -17,17 +17,13 @@ public partial class Projectile : RigidBody3D
 
     private CollisionShape3D collision; 
 
-    //private float initialVelocity; 
-
     private float step; 
     
     private string pType;
     //helper static class to create projectile.
-    public static Projectile NewProjectile(float step, PackedScene scene){
-
+    public static Projectile NewProjectile(float step, PackedScene scene)
+    {
         var projectileInstance = scene.Instantiate<Projectile>(); 
-
-        //projectileInstance.SetInitialVelocity(initialVelocity);
 
         projectileInstance.SetPType(scene.ResourceName);
 
@@ -38,49 +34,48 @@ public partial class Projectile : RigidBody3D
         return projectileInstance; 
     }
 
-    // public void SetInitialVelocity(float initialVelocity){
-    //     this.initialVelocity = initialVelocity; 
-    // }
 
     public override void _Ready()
     {
-
         ProjectilePool.Register(this); 
 
         collision = GetNode<CollisionShape3D>("CollisionShape3D"); 
+
         base._Ready();
     } 
 
-    public void SetStep(float step){
-
+    public void SetStep(float step)
+    {
         this.step = step; 
     }
 
-    public void SetPType(string pType){
+    public void SetPType(string pType)
+    {
         this.pType = pType; 
     }
 
-    public string GetPType(){
+    public string GetPType()
+    {
         return pType; 
     }
 
     public override void _PhysicsProcess(double delta)
     {
-               
         Position += Transform.Basis * new Vector3(0,0,-step) * (float) delta; 
 
         base._PhysicsProcess(delta);
     }
 
-    public void _on_body_entered(Node body){
-
+    public void _on_body_entered(Node body)
+    {
         //send damage signal to object hit.
 
-        GD.Print("Projectile hit: " + body.Name);
+        //GD.Print("Projectile hit: " + body.Name);
 
-
-        
-
+        if (body is IDamageable damageable)
+        {
+            damageable.TakeDamage(10); //TODO: add damage value to projectile. 
+        }
 
         Release(); //releases the object from being used (disappear and pause)
 

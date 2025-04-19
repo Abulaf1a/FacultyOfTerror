@@ -12,6 +12,8 @@ public partial class SceneHandler : Node3D
 	/// Provides a static instance of itself, utility class for accessing the root node of the scene tree.
 	/// Doesn't work though because it isn't in the scene tree itself! 
 	/// To change or get rid of!
+	/// 
+	/// SO MY SCENE HAS TO ADD THIS INFORMATION TO THIS SCENE HANDLER!! 
 	/// </summary>
 	private Node3D root; 
 
@@ -31,6 +33,7 @@ public partial class SceneHandler : Node3D
 		GD.Print("scene handler ready");
 		sceneHandler = this;
 		root = this; 
+		GD.Print("root node is:" + root.Name); 
 	}
 
 	public Node3D GetRoot(){

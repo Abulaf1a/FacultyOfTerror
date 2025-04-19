@@ -44,7 +44,7 @@ public partial class PlayerAttack : Node3D
                 }
                 else
                 {
-                    GD.Print("Attack on cooldown!");
+                    // GD.Print("Attack on cooldown!");
                 }
             }
         }
@@ -56,7 +56,7 @@ public partial class PlayerAttack : Node3D
 
         // Currently just fire projectile. 
 
-        GD.Print("Performing attack with damage: " + damage);
+        // GD.Print("Performing attack with damage: " + damage);
 
         ProjectilePool projectilePool = ProjectilePool.GetInstance(); 
 

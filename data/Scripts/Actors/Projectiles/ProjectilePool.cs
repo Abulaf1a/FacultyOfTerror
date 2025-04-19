@@ -68,8 +68,8 @@ public partial class ProjectilePool : Node3D {
     }
 
     // Used where the firing parent contains both velocity and rotation information 
-    public Projectile FireProjectile(float bulletSpeed, Node3D parent, PackedScene projectileType){
-
+    public Projectile FireProjectile(float bulletSpeed, Node3D parent, PackedScene projectileType)
+    {
         scene = projectileType; 
 
         Vector3 velocity = GetVelocity(parent); //returns a velocity, if not a CB3D, returns 0,0,0.
@@ -78,10 +78,12 @@ public partial class ProjectilePool : Node3D {
         return FireWithVelocity(bulletSpeed, parent, forwardsVelocity); 
     }
 
-    private Projectile FireWithVelocity(float bulletSpeed, Node3D parent, float forwardsVelocity){
+    private Projectile FireWithVelocity(float bulletSpeed, Node3D parent, float forwardsVelocity)
+    {
         Projectile projectile = GetProjectileToUse(bulletSpeed, forwardsVelocity); 
 
-        if(!projectile.IsInsideTree()){
+        if(!projectile.IsInsideTree())
+        {
             parent.GetTree().Root.AddChild(projectile); 
         }
 
@@ -96,14 +98,13 @@ public partial class ProjectilePool : Node3D {
 
         var parentCharacter = parent as CharacterBody3D;
 
-        if(parentCharacter != null){
-
-            GD.Print("parent character velocity: " + parentCharacter.Velocity);
+        if(parentCharacter != null)
+        {
+            // GD.Print("parent character velocity: " + parentCharacter.Velocity);
             return parentCharacter.Velocity; 
         }
 
-
-        GD.Print("parent is not a character body, velocity: " + parent.GlobalTransform.Basis.Z);
+        // GD.Print("parent is not a character body, velocity: " + parent.GlobalTransform.Basis.Z);
         return new Vector3(); // if not a character body, return 0 velocity. I assume initialising it like this will initialise to 0,0,0. 
         
     }
@@ -111,7 +112,7 @@ public partial class ProjectilePool : Node3D {
     //Gets a free projectile, either instantiating or reusing
     private Projectile GetProjectileToUse(float bulletSpeed, float forwardsVelocity){
 
-        GD.Print(projectiles.Count + " projectiles in scene"); 
+        // GD.Print(projectiles.Count + " projectiles in scene"); 
 
 
         if(projectiles.Count < limit){
@@ -137,12 +138,10 @@ public partial class ProjectilePool : Node3D {
 
         return projectiles[0];
 
-        
     }
 
     //Called by GetProjectileToUse to check if an existing projectile is free. 
     int CheckFreeObjectExists(){
-
 
         for(int i = 0; i < projectiles.Count; i++){
             if(projectiles[i].IsFree() && projectiles[i].GetPType() == scene.ResourceName){
