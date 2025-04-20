@@ -3,47 +3,38 @@ using System;
 
 public partial class IdleEnemyState : EnemyState {
 
+    AttackPlayerEnemyState attackState;
 
-
-    public override void Update(double delta)
+    public override void _Ready()
     {
-
-        // GD.Print("running idle state"); 
-
-        enemy.GetTargetPos(); 
-
-        if(enemy.Position.DistanceTo(enemy.GetTargetPos()) > 6)
-        {
-            Exit("FollowPlayerEnemyState");
-        }
-
-        enemy.Velocity = new Vector3(0,0,0); //enemy doesn't stop ?? why??? 
-        enemy.MoveAndSlide();  
-        
-        //logic to happen every physics tick happens here.
-        //this is determined in the State class, where the Update function is called from _PhysicsProcess();
-
-        base.Update(delta);
+        attackState = GetParent().GetNode<AttackPlayerEnemyState>("AttackPlayerEnemyState");
+        base._Ready();
     }
-
 
     public override void Enter(FiniteStateMachine stateMachine)
     {
-
-        
-        //enemy.SetTargetPos(enemy.GlobalPosition); 
-        //logic for when the state is entered happens here
+        stateMachine.SetAttackState(attackState); 
         base.Enter(stateMachine);
+    }
+
+  public override void Update(double delta)
+    {
+        //called from FSM! 
+        // attackState.Update(delta);
+
+        enemy.GetTargetPos(); 
+
+        if(enemy.Position.DistanceTo(enemy.GetTargetPos()) > 3)
+        {
+            Exit("FollowPlayerEnemyState");
+        }
+        
+        base.Update(delta);
     }
 
     public override void Exit(String next)
     {
-        if(stateMachine != null)
-        {
-                    stateMachine.EmitSignal(FiniteStateMachine.SignalName.ChangeState, next);
-        }
-
-        //logic for when the state is exited happens here. 
+        stateMachine.SetAttackState(null); 
         base.Exit(next);
     }
 }

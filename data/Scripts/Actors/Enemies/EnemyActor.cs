@@ -10,6 +10,8 @@ public partial class EnemyActor : BaseActor, IDamageable
     /// </summary>
 	protected EnemyStateEnum enemyState = EnemyStateEnum.ALIVE;
 
+	protected FiniteStateMachine finiteStateMachine; 
+
     protected int damage;
 
     protected int health = 100; // Default health value
@@ -19,6 +21,9 @@ public partial class EnemyActor : BaseActor, IDamageable
     public void Die()
     {
         GD.Print("Enemy is dead");
+
+        finiteStateMachine.EmitSignal(FiniteStateMachine.SignalName.ChangeState, "DeadEnemyState"); 
+        
         // Emit signal for enemy death.
         enemyState = EnemyStateEnum.DEAD;
     }

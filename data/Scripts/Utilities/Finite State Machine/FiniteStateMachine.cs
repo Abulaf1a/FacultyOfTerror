@@ -5,10 +5,21 @@ using System.Collections.Generic;
 public partial class FiniteStateMachine : Node{
 
 
+    /// <summary>
+    /// Finite State Machine for Enemies.
+    /// Separate state for movement and attacking 
+    /// 
+    /// Both states run from FSM _PhysicsProcess()
+    /// 
+    /// However, movement state starts and stops attack state
+    /// (e.g. attack state determines movement state) 
+    /// </summary>
+
     [Signal]
     public delegate void ChangeStateEventHandler(String next); 
 
-    private State currentState; 
+    private State currentMoveState; 
+    private State currentAttackState; 
     private Dictionary<String, State> states = new Dictionary<string, State>(); 
 
     [Export] State FirstState; 
@@ -21,15 +32,17 @@ public partial class FiniteStateMachine : Node{
         //loop over children to add to the state machine list 
         foreach(Node child in children)
         {
-            if(child is State state) //syntax here is called "pattern matching", checks and casts at the same time.
+            if(child is State state) //syntax here is called "pattern matching", 
+            // checks and casts at the same time.
             {
                 states.Add(state.Name, state); //casts to state - but to specific state? 
             }
         }
 
-        currentState = FirstState; 
+        currentMoveState = FirstState; 
 
-        currentState.Enter(this); 
+        currentMoveState.Enter(this); 
+
     }
 
     public void _on_change_state(String next){
@@ -38,28 +51,32 @@ public partial class FiniteStateMachine : Node{
 
         State nextState = states[next]; 
 
-        currentState = nextState; 
+        currentMoveState = nextState; 
 
-        GD.Print("state changed, current state now: " + currentState.Name); 
+        GD.Print("state changed, current state now: " + currentMoveState.Name); 
 
-        currentState.Enter(this); 
+        currentMoveState.Enter(this); 
 
-    }
-
-    public override void _Process(double delta)
-    {
-        if(currentState != null)
-        {
-            // currentState._Process(delta); //idiot!!
-
-        }
-        base._Process(delta);
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        currentState?.Update(delta); 
-         //null 'propagation' I guess like a tenary statement. 
+        currentMoveState?.Update(delta); 
+
+        currentAttackState?.Update(delta);
+    }
+
+    public void SetAttackState(State state){
+
+        if(state!= null){
+            currentAttackState = state; 
+            currentAttackState.Enter(this); 
+        }
+        else{
+            currentAttackState = null; 
+        }
+   
+
     }
 
 } 
